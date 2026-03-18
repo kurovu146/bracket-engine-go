@@ -92,6 +92,16 @@ type GroupStageResult struct {
 	Matches []MatchSeed `json:"matches"`
 }
 
-func strPtr(s string) *string    { return &s }
-func intPtr(i int) *int          { return &i }
-func slotPtr(s MatchSlot) *MatchSlot { return &s }
+// StrPtr returns a pointer to s. Useful for building MatchSeed literals.
+func StrPtr(s string) *string { return &s }
+
+// IntPtr returns a pointer to i. Useful for BestOfConfig and option fields.
+func IntPtr(i int) *int { return &i }
+
+// SlotPtr returns a pointer to s.
+func SlotPtr(s MatchSlot) *MatchSlot { return &s }
+
+// Unexported aliases used internally.
+func strPtr(s string) *string        { return StrPtr(s) }
+func intPtr(i int) *int              { return IntPtr(i) }
+func slotPtr(s MatchSlot) *MatchSlot { return SlotPtr(s) }
