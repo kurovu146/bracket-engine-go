@@ -1,7 +1,5 @@
 package bracket
 
-import "math"
-
 // GenerateDoubleElimination generates a double elimination bracket.
 //
 // Players start in the Winners Bracket. Losing once drops you to the
@@ -39,7 +37,7 @@ func GenerateDoubleElimination(participantIDs []string, options *DoubleEliminati
 	winnersRoundStart := make([]int, 0, totalWinnersRounds)
 
 	for round := 1; round <= totalWinnersRounds; round++ {
-		matchesInRound := bracketSize / int(math.Pow(2, float64(round)))
+		matchesInRound := bracketSize >> round
 		winnersRoundStart = append(winnersRoundStart, len(matches))
 		roundName := ResolveRoundName(BracketWinners, round, totalWinnersRounds)
 
@@ -75,7 +73,7 @@ func GenerateDoubleElimination(participantIDs []string, options *DoubleEliminati
 	for r := 0; r < totalWinnersRounds-1; r++ {
 		start := winnersRoundStart[r]
 		nextStart := winnersRoundStart[r+1]
-		count := bracketSize / int(math.Pow(2, float64(r+1)))
+		count := bracketSize >> (r + 1)
 
 		for i := 0; i < count; i++ {
 			matches[start+i].NextMatchIndex = intPtr(nextStart + i/2)
@@ -157,7 +155,7 @@ func GenerateDoubleElimination(participantIDs []string, options *DoubleEliminati
 	// ============ LINK WINNERS LOSERS -> LOSERS BRACKET ============
 	for wRound := 0; wRound < totalWinnersRounds; wRound++ {
 		wStart := winnersRoundStart[wRound]
-		wCount := bracketSize / int(math.Pow(2, float64(wRound+1)))
+		wCount := bracketSize >> (wRound + 1)
 
 		if wRound == 0 {
 			// W1 losers -> L1: pair them 2-to-1

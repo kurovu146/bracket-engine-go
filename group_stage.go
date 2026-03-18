@@ -85,11 +85,19 @@ func GenerateGroupStage(participantIDs []string, options *GroupStageOptions) (*G
 			continue
 		}
 
-		bracketType := fmtGroupBracketType(gi)
+		bracketType := GroupBracketType(gi)
 
 		groupMatches, err := GenerateRoundRobin(groups[gi], rrOpts)
 		if err != nil {
 			return nil, err
+		}
+
+		// Calculate total rounds in this group for round name resolution.
+		totalGroupRounds := 0
+		for _, m := range groupMatches {
+			if m.Round > totalGroupRounds {
+				totalGroupRounds = m.Round
+			}
 		}
 
 		// Track per-round match counter for stable match IDs
@@ -109,7 +117,7 @@ func GenerateGroupStage(participantIDs []string, options *GroupStageOptions) (*G
 				LoserNextMatchIndex: nil,
 				NextMatchSlot:       nil,
 				LoserNextMatchSlot:  nil,
-				RoundName:           roundNamePtr(bracketType, m.Round, m.Round),
+				RoundName:           roundNamePtr(bracketType, m.Round, totalGroupRounds),
 				IsBye:               m.IsBye,
 				BestOf:              m.BestOf,
 			})

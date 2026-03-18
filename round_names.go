@@ -1,9 +1,6 @@
 package bracket
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
 
 // ResolveRoundName returns a human-readable round name based on bracket type and position.
 //
@@ -45,9 +42,6 @@ func ResolveRoundName(bracketType BracketType, round, totalRounds int) string {
 		return fmt.Sprintf("Round %d", round)
 
 	default:
-		if strings.HasPrefix(string(bracketType), "group_") {
-			return fmt.Sprintf("Round %d", round)
-		}
 		return fmt.Sprintf("Round %d", round)
 	}
 }

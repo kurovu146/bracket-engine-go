@@ -70,7 +70,7 @@ func GenerateSingleElimination(participantIDs []string, options *SingleEliminati
 
 	// --- Subsequent rounds ---
 	for round := 2; round <= totalRounds; round++ {
-		matchesInRound := bracketSize / int(math.Pow(2, float64(round)))
+		matchesInRound := bracketSize >> round
 		roundName := ResolveRoundName(BracketWinners, round, totalRounds)
 
 		var bestOfCfg *BestOfConfig
@@ -103,7 +103,7 @@ func GenerateSingleElimination(participantIDs []string, options *SingleEliminati
 	// --- Link winners to next round ---
 	prevRoundStart := 0
 	for round := 1; round < totalRounds; round++ {
-		matchesInRound := bracketSize / int(math.Pow(2, float64(round)))
+		matchesInRound := bracketSize >> round
 		nextRoundStart := prevRoundStart + matchesInRound
 
 		for i := 0; i < matchesInRound; i++ {

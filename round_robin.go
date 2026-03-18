@@ -1,7 +1,5 @@
 package bracket
 
-import "fmt"
-
 // byeSentinel is an empty string used as a marker for bye slots.
 // Matches containing a bye participant are filtered out of the output.
 const byeSentinel = ""
@@ -141,7 +139,3 @@ func roundNamePtr(bracketType BracketType, round, totalRounds int) *string {
 	return &name
 }
 
-// fmtGroupBracketType returns "group_N" BracketType for a given group index.
-func fmtGroupBracketType(groupIndex int) BracketType {
-	return BracketType(fmt.Sprintf("group_%d", groupIndex))
-}

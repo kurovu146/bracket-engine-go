@@ -18,19 +18,19 @@ import (
 //   - group_N:           "G{N}-R{round}-M{matchInRound}"
 func GenerateMatchID(bracketType BracketType, round, matchInRound int) string {
 	switch bracketType {
-	case "winners":
+	case BracketWinners:
 		return fmt.Sprintf("WB-R%d-M%d", round, matchInRound)
-	case "losers":
+	case BracketLosers:
 		return fmt.Sprintf("LB-R%d-M%d", round, matchInRound)
-	case "grand_final":
+	case BracketGrandFinal:
 		return "GF-M1"
-	case "grand_final_reset":
+	case BracketGrandFinalReset:
 		return "GF-M2"
-	case "third_place":
+	case BracketThirdPlace:
 		return "3RD-M1"
-	case "round_robin":
+	case BracketRoundRobin:
 		return fmt.Sprintf("RR-R%d-M%d", round, matchInRound)
-	case "swiss":
+	case BracketSwiss:
 		return fmt.Sprintf("SW-R%d-M%d", round, matchInRound)
 	default:
 		// group_N pattern
